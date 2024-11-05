@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+class Impian {
+    String deskripsi;
+    boolean sudahTerwujud;
+
+    Impian(String deskripsiImpian) {
+        deskripsi = deskripsiImpian;
+        sudahTerwujud = false;
+    }
+
+    public String toString() {
+        return (sudahTerwujud ? "[Selesai] " : "[Belum Selesai] ") + deskripsi;
+    }
+}
+
+public class dreamPlan {
+    private static Impian[] impianList = new Impian[100]; 
+    private static int jumlahImpian = 0; 
+
+    public static void main(String[] args) {
+        Scanner wedew = new Scanner(System.in);
+        int pilihan;
+
+        do {
+            System.out.println("\nAplikasi DreamPlan");
+            System.out.println("1. Tambah Impian");
+            System.out.println("2. Tampilkan Impian");
+            System.out.println("3. Edit Impian");
+            System.out.println("4. Hapus Impian");
+            System.out.println("5. Tandai Impian Selesai");
+            System.out.println("6. Keluar");
+            System.out.print("Pilih opsi: ");
+            pilihan = wedew.nextInt();
+            wedew.nextLine(); 
+
+            switch (pilihan) {
+                case 1: tambahImpian(wedew);
+                    break;
+                case 2: tampilkanImpian();
+                    break;
+                case 3: editImpian(wedew);
+                    break;
+                case 4: hapusImpian(wedew);
+                    break;
+                case 5: tandaiImpianSelesai(wedew);
+                    break;
+                case 6:
+                    System.out.println("Keluar dari aplikasi.");
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+            }
+        } while (pilihan != 6);
+    }
