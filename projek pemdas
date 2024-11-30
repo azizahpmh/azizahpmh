@@ -1,36 +1,21 @@
 import java.util.Scanner;
 
-class Impian {
-    String deskripsi;
-    boolean sudahTerwujud;
-
-    Impian(String deskripsiImpian) {
-        deskripsi = deskripsiImpian;
-        sudahTerwujud = false;
-    }
-
-    public String toString() {
-        return (sudahTerwujud ? "[Selesai] " : "[Belum Selesai] ") + deskripsi;
-    }
-}
-
-public class dreamPlan {
-    private static Impian[] impianList = new Impian[100]; 
+public class dreamplan {
+    private static Impian[] daftarImpian = new Impian[100]; 
     private static int jumlahImpian = 0; 
-
     public static void main(String[] args) {
         Scanner wedew = new Scanner(System.in);
         int pilihan;
 
         do {
-            System.out.println("\nAplikasi DreamPlan");
+            System.out.println("\n--- Aplikasi DreamPlan ---");
             System.out.println("1. Tambah Impian");
             System.out.println("2. Tampilkan Impian");
-            System.out.println("3. Edit Impian");
+            System.out.println("3. Edit Impia  n");
             System.out.println("4. Hapus Impian");
             System.out.println("5. Tandai Impian Selesai");
             System.out.println("6. Keluar");
-            System.out.print("Pilih opsi: ");
+            System.out.print("Tentukan pilihan anda: ");
             pilihan = wedew.nextInt();
             wedew.nextLine(); 
 
@@ -46,10 +31,101 @@ public class dreamPlan {
                 case 5: tandaiImpianSelesai(wedew);
                     break;
                 case 6:
-                    System.out.println("Keluar dari aplikasi.");
+                    System.out.println("Keluar dari aplikasi");
+                    System.out.println("Semangat untuk menyelesaikan impian selanjutnya!");
                     break;
                 default:
-                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+                    System.out.println("Pilihan tidak valid, Silakan coba lagi");
             }
         } while (pilihan != 6);
     }
+
+    public static class Impian {
+        String deskripsi;
+        boolean sudahTerwujud;
+
+        public Impian(String deskripsiImpian) {
+            deskripsi = deskripsiImpian;
+            sudahTerwujud = false;
+        }
+
+        public String toString() {
+            return (sudahTerwujud ? "[Selesai] " : "[Belum Selesai] ") + deskripsi;
+        }
+    }
+
+    private static void tambahImpian(Scanner wedew) {
+        System.out.print("Masukkan deskripsi impian: ");
+        String deskripsi = wedew.nextLine();
+        if (jumlahImpian < daftarImpian.length) {
+            daftarImpian[jumlahImpian++] = new Impian(deskripsi);
+            System.out.println("Impian berhasil ditambahkan");
+        } else {
+            System.out.println("Daftar impian penuh, tidak dapat menambahkan lagi");
+        }
+    }
+
+    private static void tampilkanImpian() {
+        if (jumlahImpian == 0) {
+            System.out.println("Belum ada impian dalam daftar");
+        } else {
+            System.out.println("\nDaftar Impian:");
+            for (int i = 0; i < jumlahImpian; i++) {
+                System.out.println((i + 1) + ". " + daftarImpian[i]);
+            }
+        }
+    }
+
+    private static void editImpian(Scanner wedew) {
+        tampilkanImpian();
+        if (jumlahImpian == 0) return;
+
+        System.out.print("Masukkan nomor impian yang ingin diedit: ");
+        int nomor = wedew.nextInt();
+        wedew.nextLine(); 
+
+        if (nomor > 0 && nomor <= jumlahImpian) {
+            System.out.print("Masukkan deskripsi baru: ");
+            String deskripsiBaru = wedew.nextLine();
+            daftarImpian[nomor - 1].deskripsi = deskripsiBaru;
+            System.out.println("Impian berhasil diubah");
+        } else {
+            System.out.println("Nomor impian tidak valid");
+        }
+    }
+
+    private static void hapusImpian(Scanner wedew) {
+        tampilkanImpian();
+        if (jumlahImpian == 0) return;
+
+        System.out.print("Masukkan nomor impian yang ingin dihapus: ");
+        int nomor = wedew.nextInt();
+        wedew.nextLine(); 
+
+        if (nomor > 0 && nomor <= jumlahImpian) {
+            for (int i = nomor - 1; i < jumlahImpian - 1; i++) {
+                daftarImpian[i] = daftarImpian[i + 1];
+            }
+            jumlahImpian--;
+            System.out.println("Impian berhasil dihapus");
+        } else {
+            System.out.println("Nomor impian tidak valid");
+        }
+    }
+
+    private static void tandaiImpianSelesai(Scanner wedew) {
+        tampilkanImpian();
+        if (jumlahImpian == 0) return;
+
+        System.out.print("Masukkan nomor impian yang sudah selesai: ");
+        int nomor = wedew.nextInt();
+        wedew.nextLine(); 
+
+        if (nomor > 0 && nomor <= jumlahImpian) {
+            daftarImpian [nomor - 1].sudahTerwujud = true;
+            System.out.println("Impian berhasil ditandai sebagai selesai");
+        } else {
+            System.out.println("Nomor impian tidak valid.");
+        }
+    }
+}
